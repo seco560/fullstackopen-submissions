@@ -1,0 +1,16 @@
+title Notes Example App - Submitting a Note 
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+note over server: New note is added to list of\nexisting notes on the server
+server->browser: 302 response code - a redirect triggering a reload of the site
+note over browser: From here the actions are the same \nas in the site's initial loading
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server->browser: Same HTML
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser: Same CSS
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server->browser: Same JS code
+note over browser: Start executing JS code, fetch the new updated data
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server->browser: [{content: "no alarms and no surprises", date: "2021-08-31"},...]
+note over browser: The browser reloads all previous notes, and any new ones

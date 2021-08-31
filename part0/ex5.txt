@@ -1,0 +1,14 @@
+title Notes Example App SPA - Loading the Site 
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server->browser: HTML document
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser: CSS stylesheet
+note over server: HTML and CSS are functionally identical\nto traditional version of site
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server->browser: JS SPA-specific file
+note over browser: Browser starts executing the JS code,\nrequesting the JSON data
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+note over server: This is the same JSON that the\ntraditional version of the site retrieves
+server->browser: [{content: "no alarms and no surprises", date: "2021-08-31"},...]
+note over browser: Event handler renders the notes - executed by browser

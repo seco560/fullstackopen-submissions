@@ -1,0 +1,8 @@
+title Notes Example App SPA - Submitting a Note
+
+note over browser: Current state has SPA site loaded in browser\n(i.e end of previous diagram)
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+note over server: Server code adds note to data on the site,\nsends browser back the new note data
+server->browser: Request payload: {content: "maybe it'd come to life", date: "2021-08-31T13:40:10.659Z"}
+note over browser: Browser updates and re-renders data locally \nusing functions loaded in spa.js
+note right of browser: Conclusion: SPAs are a lot less taxing on the network, causing less reloads\nand handling local rendering and server communication separately
