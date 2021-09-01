@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const GenericButton = ({text, onClick}) => (
+const GenericButton = ({ text, onClick }) => (
   <div>
     <button onClick={onClick}>{text}</button>
   </div>
 );
 
-const AnecdoteDisplay = ({anecdote}) => (
+const AnecdoteDisplay = ({ anecdote }) => (
   <h3>"{anecdote}"</h3>
 );
 
-const VoteDisplay = ({votes}) => (
+const VoteDisplay = ({ votes }) => (
   <h4>This bit of wisdom has {votes} votes.</h4>
 );
+
+const Anecdote = ({ anecdote, votes }) => (
+  <div>
+    <AnecdoteDisplay anecdote={anecdote} />
+    <VoteDisplay votes={votes} />
+  </div>
+)
 
 const App = () => {
   const anecdotes = [
@@ -30,31 +37,36 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0);
-  const [voteArray, setVoteArray] = useState(Array.apply(null, Array(anecdotes.length)).map(Number.prototype.valueOf,0));
+  const [voteArray, setVoteArray] = useState(Array.apply(null, Array(anecdotes.length)).map(Number.prototype.valueOf, 0));
 
   // setVoteArray();
 
-  const setRandomIndex = () => { 
+  const setRandomIndex = () => {
     let result = selected;
     do { // ensure we don't display the same anecdote twice in a row
-      result = Math.floor(Math.random() * anecdotes.length); 
+      result = Math.floor(Math.random() * anecdotes.length);
     } while (result === selected);
     setSelected(result);
   }
 
   const incrementVote = () => {
     const voteArrayCopy = [...voteArray];
-    voteArrayCopy[selected] += 1 ;
+    voteArrayCopy[selected] += 1;
     setVoteArray(voteArrayCopy);
   }
+
+  const getTopAnecdoteIndex = () => voteArray.indexOf(Math.max.apply(null, voteArray));
 
   return (
     <div className="mainDiv">
       <h1>Random Software Engineering Anecdote Generator</h1>
-      <AnecdoteDisplay anecdote={anecdotes[selected]} />
-      <VoteDisplay votes={voteArray[selected]} />
+      <Anecdote anecdote={anecdotes[selected]} votes={voteArray[selected]} />
       <GenericButton text="Add Vote" onClick={incrementVote} />
       <GenericButton text="Next Anectode" onClick={setRandomIndex} />
+      <hr />
+      <h2>Current Top Anecdote</h2>
+      <Anecdote anecdote={anecdotes[getTopAnecdoteIndex()]} 
+                votes={voteArray[getTopAnecdoteIndex()]} />
     </div>
   )
 }
