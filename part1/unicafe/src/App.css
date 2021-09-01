@@ -1,0 +1,16 @@
+.buttonBar {
+    margin-bottom: 25px;
+}
+
+h1 {
+    color: darkgreen;
+}
+
+span { /* for feedback buttons */
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.mainContent {
+    text-align: center;
+}
