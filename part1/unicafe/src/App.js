@@ -9,7 +9,7 @@ const FeedbackButton = ({ onClick, text }) => (
 )
 
 const FeedbackDisplay = ({ category, amount }) => (
-  <p>{category} {"->"} {amount}</p>
+  <tr><td>{category}</td><td>{amount}</td></tr>
 )
 
 const StatisticsDisplay = ({ good, neutral, bad }) => {
@@ -22,14 +22,22 @@ const StatisticsDisplay = ({ good, neutral, bad }) => {
    * rounding the statistic and positive percentage and displaying only two decimal places
    * both slight changes to make the page less confusing */
   return (
-    <div>
-      <p>Average: {Number.isNaN(calculateAverage())  ? "-" : 
-        (Math.round(calculateAverage() * 100) / 100).toFixed(2)}</p>
-      <p>Positive: {Number.isNaN(calculatePositivePercent()) ? "-" : 
-        (Math.round(calculatePositivePercent() * 100) / 100).toFixed(2)}</p>
-    </div>
+    <table>
+      <tbody>
+        <tr>
+          <td>Average</td>
+          <td>{Number.isNaN(calculateAverage())  ? "-" : 
+        (Math.round(calculateAverage() * 100) / 100).toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td>Positive</td>
+          <td>{Number.isNaN(calculatePositivePercent()) ? "-" : 
+        (Math.round(calculatePositivePercent() * 100) / 100).toFixed(2)}</td>
+        </tr>
+      </tbody>
+    </table>
   );
-}
+} // put second table in this component as it wouldn't make much sense to split it up
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -51,7 +59,8 @@ const App = () => {
   }
 
   /* note on naming - I called the StatisticLine in the spec FeedbackDisplay as it made more sense to me
-   * technically only the percentage and percentage are "statistics"; the others are simple displays*/
+   * technically only the percentage and percentage are "statistics"; the others are simple displays
+   * note on table(s) - split it up into two tables to fit overall structure of my site - hope that is fine */
   return (
     <div className="mainContent">
       <hr />
@@ -66,19 +75,19 @@ const App = () => {
       <h1>Feedback</h1>
       <div>
         {(good === 0 && neutral === 0 && bad === 0) ? "No feedback gathered yet." : 
-        <div>
+        <table>
+          <tbody>
           <FeedbackDisplay category={goodStr} amount={good} />
           <FeedbackDisplay category={neutralStr} amount={neutral} />
           <FeedbackDisplay category={badStr} amount={bad} />
-        </div>
+          </tbody>
+        </table>
         }
       </div>
       <hr />
       <h1>Statistics</h1>
       {(good === 0 && neutral === 0 && bad === 0) ? "No statistics to show." : 
-      <div>
         <StatisticsDisplay good={good} neutral={neutral} bad={bad} />
-      </div>
       }
       <hr />
     </div>
