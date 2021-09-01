@@ -14,3 +14,28 @@ span { /* for feedback buttons */
 .mainContent {
     text-align: center;
 }
+
+p {
+    font-size: large;
+}
+
+.gOOd {
+    box-shadow: 3px 3px 5px green;
+    font-size: large;
+    color: green;
+    background-color: darkgray;
+}
+
+.Neutral {
+    box-shadow: 3px 3px 5px yellow;
+    font-size: large;
+    color: yellow;
+    background-color: darkgray;
+}
+
+.baD {
+    box-shadow: 3px 3px 5px red;
+    font-size: large;
+    color: red;
+    background-color: darkgray;
+}

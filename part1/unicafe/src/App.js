@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import './App.css';
 
 const FeedbackButton = ({ onClick, text }) => (
+  // className is a slight hack to get different colors under the buttons
   <span>
-    <button onClick={onClick}>{text}</button>
+    <button className={text} onClick={onClick}>{text}</button>
   </span>
 )
 
@@ -37,7 +38,7 @@ const App = () => {
 
   const goodStr = "gOOd";
   const neutralStr = "Neutral";
-  const badStr = "bAd";
+  const badStr = "baD";
 
   const incrementGood = () => {
     setGood(good + 1);
@@ -49,8 +50,11 @@ const App = () => {
     setBad(bad + 1);
   }
 
+  /* note on naming - I called the StatisticLine in the spec FeedbackDisplay as it made more sense to me
+   * technically only the percentage and percentage are "statistics"; the others are simple displays*/
   return (
     <div className="mainContent">
+      <hr />
       <h1>Unicafe Feedback System</h1>
       <p>How was your experience in our cafe today?</p>
       <div className="buttonBar">
@@ -61,15 +65,22 @@ const App = () => {
       <hr />
       <h1>Feedback</h1>
       <div>
-        <FeedbackDisplay category={goodStr} amount={good} />
-        <FeedbackDisplay category={neutralStr} amount={neutral} />
-        <FeedbackDisplay category={badStr} amount={bad} />
+        {(good === 0 && neutral === 0 && bad === 0) ? "No feedback gathered yet." : 
+        <div>
+          <FeedbackDisplay category={goodStr} amount={good} />
+          <FeedbackDisplay category={neutralStr} amount={neutral} />
+          <FeedbackDisplay category={badStr} amount={bad} />
+        </div>
+        }
       </div>
       <hr />
       <h1>Statistics</h1>
+      {(good === 0 && neutral === 0 && bad === 0) ? "No statistics to show." : 
       <div>
         <StatisticsDisplay good={good} neutral={neutral} bad={bad} />
       </div>
+      }
+      <hr />
     </div>
   )
 }
