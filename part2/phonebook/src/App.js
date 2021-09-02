@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
 
 import Filter from './components/Filter';
@@ -6,31 +7,16 @@ import PersonForm from './components/PersonForm';
 import AllPersonsDisplay from './components/AllPersonsDisplay';
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    {
-      name: 'Arto Hellas',
-      phoneNumber: '040-1234567'
-    },
-    {
-      name: 'Seco Vlad',
-      phoneNumber: '070-7398087'
-    },
-    {
-      name: 'Ada Lovelace',
-      phoneNumber: '39-44-5323523'
-    },
-    {
-      name: 'Dan Abramov',
-      phoneNumber: '12-43-234345'
-    },
-    {
-      name: 'Mary Poppendieck',
-      phoneNumber: '39-23-6423122'
-    }
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
   const [filterValue, setFilterValue] = useState('');
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5600/persons") //different port for personal reasons
+      .then(response => setPersons(response.data))
+  }, []);
 
   const addPerson = (event) => {
     event.preventDefault();
