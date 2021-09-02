@@ -1,42 +1,5 @@
 import React from 'react';
-
-const Header = ({ course }) => (
-  <div>
-    <h1>{course.name}</h1>
-  </div>
-);
-
-const Part = ({ name, exercises }) => (
-  <div>
-    <p>
-      {name} {exercises}
-    </p>
-  </div>
-)
-
-const Content = ({ course }) => {
-  return (
-    <div>
-      {course.parts.map(part => <Part key={part.id} name={part.name} exercises={part.exercises} />)}
-    </div>
-  );
-}
-
-const Total = ({ course }) => (
-  <div>
-    <strong>
-      Total number of exercises = {course.parts.map(el => el.exercises).reduce((a, b) => a + b, 0)}
-    </strong>
-  </div>
-)
-
-const Course = ({ course }) => (
-  <div>
-    <Header course={course} />
-    <Content course={course} />
-    <Total course={course} />
-  </div>
-);
+import Course from './components/Course';
 
 const App = () => {
   const courses = [
@@ -108,8 +71,12 @@ const App = () => {
   return (
     <div>
       {courses.map(course => <Course key ={course.id} course={course} />)}
+      <h3>Total Number of Exercises: {courses.map(course => course.parts)
+        .reduce((a, b) => Array.prototype.concat(a, b), []).map(module => module.exercises)
+        .reduce((a, b) => a + b, 0)}
+      </h3>
     </div>
   );
-}
+} // added a functional sausage that returns the total number of exercises
 
 export default App;
