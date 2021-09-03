@@ -27,13 +27,26 @@ const IAmErrorComponent = () => (
   </p>
 )
 
-const CountriesDisplay = ({ countryData, countryQuery }) => {
-  const countryFilterList = countryData.filter(country => country.name.toLowerCase().includes(countryQuery.toLowerCase()));
+const ShowDataButtonDisplay = ({countryData}) => {
+  const [dataIsShown, setDataIsShown] = useState(false);
+  const showButtonOnClick = () => setDataIsShown(!dataIsShown);
+
+  return (
+    <span>
+      <button onClick={showButtonOnClick}>{ dataIsShown ? "Hide" : "Show"}</button>
+      {dataIsShown ? <CountryComponentDisplay countryData={countryData}/> : <span />}
+    </span>
+  );
+}
+
+const CountriesDisplay = ({ allCountriesData, countryQuery }) => {
+  const countryFilterList = allCountriesData.filter(country => country.name.toLowerCase().includes(countryQuery.toLowerCase()));
   const nrOfCountries = countryFilterList.length;
   return (
     <div>
       {nrOfCountries > 10 ? <p>Too many matches, be more specific</p>
-        : nrOfCountries <= 10 && nrOfCountries > 1 ? countryFilterList.map(country => <p>{country.name}</p>)
+        : nrOfCountries <= 10 && nrOfCountries > 1 ? countryFilterList
+          .map(countryData => <div>{countryData.name}<ShowDataButtonDisplay countryData={countryData} /></div>)
         : nrOfCountries === 1 ? <CountryComponentDisplay countryData={countryFilterList[0]} />
         : <IAmErrorComponent />
       }
@@ -44,12 +57,12 @@ const CountriesDisplay = ({ countryData, countryQuery }) => {
 const App = () => {
 
   const [countryQuery, setCountryQuery] = useState('');
-  const [countryData, setCountryData] = useState([]);
+  const [allCountriesData, setAllCountriesData] = useState([]);
 
   useEffect(() => {
     axios
       .get("https://restcountries.eu/rest/v2/all")
-      .then(response => setCountryData(response.data)
+      .then(response => setAllCountriesData(response.data)
       );
   }, []);
 
@@ -62,7 +75,7 @@ const App = () => {
       <div>Search for countries: <input value={countryQuery} placeholder={"Romania"}
         onChange={handleCountryChange} />
       </div>
-      <CountriesDisplay countryData={countryData} countryQuery={countryQuery} />
+      <CountriesDisplay allCountriesData={allCountriesData} countryQuery={countryQuery} />
     </div>
   );
 
