@@ -17,7 +17,7 @@
     },
     {
       "name": "Kanye West",
-      "phoneNumber": "1337-1290-608",
+      "phoneNumber": "420-1337-808",
       "id": 4
     },
     {
@@ -26,9 +26,19 @@
       "id": 5
     },
     {
-      "name": "Welp What",
-      "phoneNumber": "12938719847",
+      "name": "Seco Radu",
+      "phoneNumber": "0728618472",
       "id": 6
+    },
+    {
+      "name": "Phil Collins",
+      "phoneNumber": "555-1800-949",
+      "id": 7
+    },
+    {
+      "name": "Kid Cudi",
+      "phoneNumber": "420420420",
+      "id": 8
     }
   ]
 }
